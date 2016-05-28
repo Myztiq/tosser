@@ -6,7 +6,9 @@
   "scripts": {
     "build": "babel --out-dir lib src",
     "lint": "standard --verbose src/*",
-    "prepublish": "not-in-install && npm run lint && npm run build || in-install"
+    "generatedoc": "jsdoc src/* -d doc/",
+    "doc": "npm run generatedoc; open -a 'Google Chrome' doc/index.html",
+    "prepublish": "not-in-install && npm run generatedoc && npm run lint && npm run build || in-install"
   },
   "author": "Ryan Kahn <github@ryan-kahn.com>",
   "license": "MIT",
@@ -17,6 +19,7 @@
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "in-publish": "^2.0.0",
+    "jsdoc": "^3.4.0",
     "standard": "^7.1.1"
   },
   "dependencies": {

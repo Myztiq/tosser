@@ -1,5 +1,10 @@
-// Setup the CORS iframe messaging system
-export default class Tosser {
+/**
+ * Tosser allows for easy frame to frame communication
+ */
+class Tosser {
+  /**
+   * Creates a new Tosser class
+   */
   constructor () {
     this.registeredMessages = {}
     this.pendingMessages = {}
@@ -121,6 +126,11 @@ export default class Tosser {
     return message
   }
 
+  /**
+   * Trigger a message as if it was just received from a remote source
+   * @param type
+   * @param content
+   */
   trigger (type, content = '') {
     if (this.registeredMessages[ type ]) {
       this.registeredMessages[ type ].forEach((callback) => {
@@ -230,3 +240,5 @@ export default class Tosser {
     return this.registeredMessages[ type ].push(callback)
   }
 }
+
+module.exports = Tosser
