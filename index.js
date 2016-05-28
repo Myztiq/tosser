@@ -129,6 +129,13 @@ export default class Messenger {
     }
   }
 
+  /**
+   * Broadcast a message to every frame
+   * @param type
+   * @param content
+   * @param callback
+   * @returns {*}
+   */
   broadcast (type, content = '', callback) {
     let message = this._prepMessage(type, content, callback)
     this.pendingMessages[ message.id ] = {
@@ -139,6 +146,13 @@ export default class Messenger {
     return this._sendMessage(message)
   }
 
+  /**
+   * Send a message just to the parent frame
+   * @param type
+   * @param content
+   * @param callback
+   * @returns {*}
+   */
   sendToParent (type, content = '', callback = function () {}) {
     if (window.parent && window.parent !== window) {
       let message = this._prepMessage(type, content, callback)
@@ -151,6 +165,12 @@ export default class Messenger {
     }
   }
 
+  /**
+   * Send a message to direct children
+   * @param type
+   * @param content
+   * @param callback
+   */
   sendToChildren (type, content = '', callback = function () {}) {
     let message = this._prepMessage(type, content, callback)
     this.clientWindows.forEach((targetWindow) => {
@@ -164,6 +184,14 @@ export default class Messenger {
     })
   }
 
+  /**
+   * Send a message to a target window
+   * @param type
+   * @param content
+   * @param targetWindow
+   * @param callback
+   * @returns {*}
+   */
   sendToWindow (type, content = '', targetWindow, callback = function () {}) {
     let message = this._prepMessage(type, content, callback)
 
@@ -176,6 +204,12 @@ export default class Messenger {
     return this._sendMessage(message, targetWindow)
   }
 
+  /**
+   * Listen for a single message to be sent to the current frame
+   * @param type
+   * @param callback
+   * @returns {Number}
+   */
   once (type, callback) {
     if (!this.onceRegisteredMessages[ type ]) {
       this.onceRegisteredMessages[ type ] = []
@@ -183,6 +217,12 @@ export default class Messenger {
     return this.onceRegisteredMessages[ type ].push(callback)
   }
 
+  /**
+   * Listen for any messages sent to this frame
+   * @param type
+   * @param callback
+   * @returns {Number}
+   */
   on (type, callback) {
     if (!this.registeredMessages[ type ]) {
       this.registeredMessages[ type ] = []
