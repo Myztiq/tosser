@@ -10,6 +10,10 @@
   },
   "author": "Ryan Kahn <github@ryan-kahn.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Myztiq/tosser.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "in-publish": "^2.0.0",
