@@ -1,7 +1,6 @@
 // Setup the CORS iframe messaging system
 export default class Messenger {
   constructor () {
-    console.log(Promise)
     this.registeredMessages = {}
     this.pendingMessages = {}
     this.messageSendTimeout = {}
@@ -37,12 +36,11 @@ export default class Messenger {
       }
 
       // Figure out who sent us this message so we can target them if we have an element to target
-      for (let i = 0; i < this.clientWindows.length; i++) {
-        let clientWindow = this.clientWindows[ i ]
+      this.clientWindows.forEach((clientWindow) => {
         if (clientWindow.window === e.source) {
           receivedFrom.element = clientWindow.element
         }
-      }
+      })
 
       if (data.ack) {
         let message = this.pendingMessages[ data.ack ]
@@ -74,12 +72,11 @@ export default class Messenger {
       targetWindow.window.postMessage(body, '*')
     } else {
       let frames = this._getAllFramesEverywhere()
-      for (let i = 0; i < frames.length; i++) {
-        let clientWindow = frames[ i ]
+      frames.forEach((clientWindow) => {
         if (clientWindow.window) {
           clientWindow.window.postMessage(body, '*')
         }
-      }
+      })
     }
     return this._checkMessagePool()
   }
@@ -126,10 +123,9 @@ export default class Messenger {
 
   trigger (type, content = '', callback) {
     if (this.registeredMessages[ type ]) {
-      for (let i = 0; i < this.registeredMessages[ type ].length; i++) {
-        callback = this.registeredMessages[ type ][ i ]
+      this.registeredMessages[ type ].forEach((callback) => {
         callback(content)
-      }
+      })
     }
   }
 
@@ -157,17 +153,15 @@ export default class Messenger {
 
   sendToChildren (type, content = '', callback = function () {}) {
     let message = this._prepMessage(type, content, callback)
-    for (let i = 0; i < this.clientWindows.length; i++) {
-      let targetWindow = this.clientWindows[ i ](targetWindow => {
-        this.pendingMessages[ message.id ] = {
-          message,
-          callback,
-          target: targetWindow
-        }
+    this.clientWindows.forEach((targetWindow) => {
+      this.pendingMessages[ message.id ] = {
+        message,
+        callback,
+        target: targetWindow
+      }
 
-        return this._sendMessage(message, targetWindow)
-      })(targetWindow)
-    }
+      return this._sendMessage(message, targetWindow)
+    })
   }
 
   sendToWindow (type, content = '', targetWindow, callback = function () {}) {
