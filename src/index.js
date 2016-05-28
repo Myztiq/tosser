@@ -1,5 +1,5 @@
 // Setup the CORS iframe messaging system
-export default class Messenger {
+export default class Tosser {
   constructor () {
     this.registeredMessages = {}
     this.pendingMessages = {}
