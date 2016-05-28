@@ -1,6 +1,6 @@
 {
   "name": "tosser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Allows you to toss messages across frames",
   "main": "lib/index.js",
   "scripts": {
