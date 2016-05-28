@@ -7,14 +7,14 @@ export default class Messenger {
     this.clientWindows = []
     this.onceRegisteredMessages = {}
 
-    $('iframe').each((index, frame) => {
+    window.$('iframe').each((index, frame) => {
       return this.clientWindows.push({
         window: frame.contentWindow,
-        element: $(frame)
+        element: window.$(frame)
       })
     })
 
-    $(window).on('message', (evt) => {
+    window.$(window).on('message', (evt) => {
       let e = evt.originalEvent
 
       if (!e.data) {

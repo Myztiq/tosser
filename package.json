@@ -2,10 +2,20 @@
   "name": "tosser",
   "version": "0.0.2",
   "description": "Allows you to toss messages across frames",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel --out-dir lib src",
+    "lint": "standard --verbose src/*",
+    "prepublish": "not-in-install && npm run lint && npm run build || in-install"
   },
   "author": "Ryan Kahn <github@ryan-kahn.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "in-publish": "^2.0.0",
+    "standard": "^7.1.1"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.9.0"
+  }
 }
