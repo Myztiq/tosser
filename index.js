@@ -121,7 +121,7 @@ export default class Messenger {
     return message
   }
 
-  trigger (type, content = '', callback) {
+  trigger (type, content = '') {
     if (this.registeredMessages[ type ]) {
       this.registeredMessages[ type ].forEach((callback) => {
         callback(content)
@@ -136,7 +136,7 @@ export default class Messenger {
    * @param callback
    * @returns {*}
    */
-  broadcast (type, content = '', callback) {
+  broadcast (type, content = '', callback = () => {}) {
     let message = this._prepMessage(type, content, callback)
     this.pendingMessages[ message.id ] = {
       message,
@@ -153,7 +153,7 @@ export default class Messenger {
    * @param callback
    * @returns {*}
    */
-  sendToParent (type, content = '', callback = function () {}) {
+  sendToParent (type, content = '', callback = () => {}) {
     if (window.parent && window.parent !== window) {
       let message = this._prepMessage(type, content, callback)
       this.pendingMessages[ message.id ] = {
@@ -171,7 +171,7 @@ export default class Messenger {
    * @param content
    * @param callback
    */
-  sendToChildren (type, content = '', callback = function () {}) {
+  sendToChildren (type, content = '', callback = () => {}) {
     let message = this._prepMessage(type, content, callback)
     this.clientWindows.forEach((targetWindow) => {
       this.pendingMessages[ message.id ] = {
@@ -192,7 +192,7 @@ export default class Messenger {
    * @param callback
    * @returns {*}
    */
-  sendToWindow (type, content = '', targetWindow, callback = function () {}) {
+  sendToWindow (type, content = '', targetWindow, callback = () => {}) {
     let message = this._prepMessage(type, content, callback)
 
     this.pendingMessages[ message.id ] = {
