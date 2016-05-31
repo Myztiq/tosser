@@ -4,6 +4,8 @@ Send your messages from one frame to the other using a simple API which give you
 
 ![Trebuchet](https://cdn3.artstation.com/p/assets/images/images/000/601/179/large/greg-zaal-trebuchet.jpg?1428161639)
 
+Much thanks to Mike Kruger for letting me open source this portion of code created while building https://www.nsyrt.com/
+
 
 ## API
  - trigger (type, content = '', callback)
