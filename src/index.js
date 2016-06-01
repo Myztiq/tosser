@@ -50,7 +50,9 @@ class Tosser {
       if (data.ack) {
         let message = this.pendingMessages[ data.ack ]
         delete this.pendingMessages[ data.ack ]
-        return message.callback(true) // Send ACK
+        if (message && message.callback) {
+          message.callback(true) // Send ACK
+        }
       } else if (data.type) {
         this._sendMessage({ ack: data.id }, receivedFrom.window)
         if (this.onceRegisteredMessages[ data.type ]) {
