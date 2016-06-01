@@ -89,11 +89,9 @@ class Tosser {
   _getAllFramesEverywhere () {
     const _getWindowsFrames = (window) => {
       let rtn = []
-      if (window && window.frames) {
-        window.frames.forEach((frame) => {
-          rtn.push(frame)
-          rtn = rtn.concat(_getWindowsFrames(frame))
-        })
+      for (let frame in window.frames) {
+        rtn.push(frame)
+        rtn = rtn.concat(_getWindowsFrames(frame))
       }
       return rtn
     }
@@ -106,7 +104,8 @@ class Tosser {
   _checkMessagePool () {
     clearTimeout(this.messageSendTimeout)
     this.messageSendTimeout = setTimeout(() => {
-      this.pendingMessages.forEach((pendingMessage, index) => {
+      Object.keys(this.pendingMessages).forEach((index) => {
+        let pendingMessage = this.pendingMessages[index]
         pendingMessage.message.attempt++
         if (pendingMessage.message.attempt > 20) {
           delete this.pendingMessages[ index ]
