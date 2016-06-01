@@ -89,10 +89,12 @@ class Tosser {
   _getAllFramesEverywhere () {
     const _getWindowsFrames = (window) => {
       let rtn = []
-      window.frames.forEach((frame) => {
-        rtn.push(frame)
-        rtn = rtn.concat(_getWindowsFrames(frame))
-      })
+      if (window && window.frames) {
+        window.frames.forEach((frame) => {
+          rtn.push(frame)
+          rtn = rtn.concat(_getWindowsFrames(frame))
+        })
+      }
       return rtn
     }
 
