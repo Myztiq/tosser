@@ -73,7 +73,7 @@ class Tosser {
     // Make sure the message that we send out is a string and not an object.
     // IE does not like sending objects across
     body = JSON.stringify(body)
-    if (targetWindow.window) {
+    if (targetWindow && targetWindow.window) {
       targetWindow.window.postMessage(body, '*')
     } else {
       let frames = this._getAllFramesEverywhere()
